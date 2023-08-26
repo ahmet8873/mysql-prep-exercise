@@ -115,7 +115,7 @@ VALUES
 -- The RecipeStep table references both the Recipe table and the Step table with foreign keys (RecipeID and StepID).
 
 
-Relationships:
+--Relationships:
 
 -- One-to-Many: A Category can have multiple Recipes.
 -- Many-to-Many: A Recipe can have multiple Ingredients, and an Ingredient can be used in multiple Recipes.
