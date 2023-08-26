@@ -100,3 +100,58 @@ VALUES
     (3, 5, 2),
     (3, 6, 3),
     (3, 10, 4);
+
+-- Primary Keys and Relationships:
+
+-- The Recipe table has a primary key (RecipeID).
+-- The Category table has a primary key (CategoryID).
+-- The Ingredient table has a primary key (IngredientID).
+-- The Step table has a primary key (StepID).
+
+-- The relationships are as follows:
+
+-- The Recipe table references the Category table with a foreign key (CategoryID).
+-- The RecipeIngredient table references both the Recipe table and the Ingredient table with foreign keys (RecipeID and IngredientID).
+-- The RecipeStep table references both the Recipe table and the Step table with foreign keys (RecipeID and StepID).
+
+
+Relationships:
+
+-- One-to-Many: A Category can have multiple Recipes.
+-- Many-to-Many: A Recipe can have multiple Ingredients, and an Ingredient can be used in multiple Recipes.
+-- One-to-Many: A Recipe can have multiple Steps.
+
+--All the vegetarian recipes with potatoes:
+SELECT r.Name
+FROM Recipe r
+JOIN RecipeIngredient ri ON r.RecipeID = ri.RecipeID
+JOIN Ingredient i ON ri.IngredientID = i.IngredientID
+WHERE r.CategoryID = 3 
+AND i.Name = 'Potatoes';
+
+
+--All the cakes that do not need baking:
+SELECT r.Name
+FROM Recipe r
+JOIN RecipeStep rs ON r.RecipeID = rs.RecipeID
+JOIN Step s ON rs.StepID = s.StepID
+WHERE r.CategoryID = 2 
+AND s.Description NOT LIKE '%bake%';
+
+
+--All the vegan and Japanese recipes:
+
+SELECT r.Name
+FROM Recipe r
+JOIN Category c ON r.CategoryID = c.CategoryID
+WHERE c.Name = 'Japanese'
+AND NOT EXISTS (
+    SELECT 1
+    FROM RecipeIngredient ri
+    JOIN Ingredient i ON ri.IngredientID = i.IngredientID
+    WHERE ri.RecipeID = r.RecipeID
+    AND i.Name IN ('Eggs', 'Milk')
+);
+
+--SELECT 1 in this context is just a way to structure the subquery to perform an existence check without retrieving any actual data.
+
