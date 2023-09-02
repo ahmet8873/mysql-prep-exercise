@@ -155,3 +155,25 @@ AND NOT EXISTS (
 
 --SELECT 1 in this context is just a way to structure the subquery to perform an existence check without retrieving any actual data.
 
+
+--NORMALIZATION
+
+--First Normal Form (1NF): in my database schema, all tables are  1NF since they don't contain any repeating groups, and each attribute has a single value.
+
+--Second Normal Form (2NF):A table is in 2NF if it's in 1NF and all non-key attributes are fully functionally dependent on the entire primary key.
+
+-- The Recipe table is in 2NF because it has a single-column primary key (RecipeID), and the other attributes (Name, CategoryID) depend on the entire primary key.
+-- The Category table is also in 2NF because it has a single-column primary key (CategoryID), and the Name attribute depends on the entire primary key.
+-- The Ingredient table is in 2NF because it has a single-column primary key (IngredientID), and the Name attribute depends on the entire primary key.
+-- The Step table is in 2NF because it has a single-column primary key (StepID), and the Description attribute depends on the entire primary key.
+
+--Third Normal Form (3NF): A table is in 3NF if it's in 2NF, and there are no transitive dependencies.
+
+
+
+-- RecipeIngredient table: RecipeID and IngredientID together make up the primary key. There's no transitive dependency issue here.
+-- RecipeStep table: RecipeID and StepID together make up the primary key. There's no transitive dependency issue here.
+
+--Based on this analysis, my original database schema was already in 2NF and 3NF. There were no changes needed to normalize the database further.
+
+--My database schema remains the same as what I provided, and it's in a well-normalized form. Each table has a clear primary key, and there are no transitive dependencies. Therefore, no changes were required to achieve normalization.
